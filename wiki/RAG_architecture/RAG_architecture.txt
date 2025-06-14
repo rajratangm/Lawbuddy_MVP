@@ -1,0 +1,48 @@
+flowchart LR
+    subgraph "RAG-based Chat Implementation"
+        direction TB
+        userQuery[User Healthcare Query]
+        queryProcessing[Query Processing]
+        vectorDB[Vector Database Search]
+        retrievalModule[Document Retrieval]
+        knowledgeBase[Medical Knowledge Base]
+        rankingModule[Result Ranking]
+        generationModule[Response Generation]
+        userResponse[Response to User]
+        
+        userQuery --> queryProcessing
+        queryProcessing --> vectorDB
+        vectorDB --> retrievalModule
+        knowledgeBase --> retrievalModule
+        retrievalModule --> rankingModule
+        rankingModule --> generationModule
+        generationModule --> userResponse
+    end
+    
+    subgraph "Azure Components"
+        direction TB
+        azureOpenAI[Azure OpenAI Service]
+        cogSearch[Azure Cognitive Search]
+        healthTextAnalytics[Text Analytics for Health]
+        cosmosDB[Azure Cosmos DB]
+        blobStorage[Azure Blob Storage]
+        logicApps[Azure Logic Apps]
+        apiManagement[Azure API Management]
+        
+        azureOpenAI -- Embeddings --> cogSearch
+        azureOpenAI -- Response Generation --> healthTextAnalytics
+        cogSearch -- Vector Database --> cosmosDB
+        blobStorage -- Document Store --> cogSearch
+        logicApps -- Orchestration --> azureOpenAI
+        logicApps -- Orchestration --> cogSearch
+        apiManagement -- API Gateway --> logicApps
+    end
+    
+    userQuery -.-> apiManagement
+    queryProcessing -.-> azureOpenAI
+    vectorDB -.-> cogSearch
+    knowledgeBase -.-> blobStorage
+    retrievalModule -.-> logicApps
+    rankingModule -.-> azureOpenAI
+    generationModule -.-> azureOpenAI
+    userResponse -.-> apiManagement

@@ -1,0 +1,149 @@
+classDiagram
+    class Tenant {
+        +TenantID: String
+        +Name: String
+        +Subscription: SubscriptionType
+        +Domain: String
+        +Settings: TenantSettings
+        +Status: TenantStatus
+        +CreateTenant()
+        +ManageTenant()
+        +ConfigureTenant()
+    }
+    
+    class User {
+        +UserID: String
+        +TenantID: String
+        +Name: String
+        +Email: String
+        +Phone: String
+        +Role: UserRole
+        +Status: UserStatus
+        +CreateUser()
+        +AuthenticateUser()
+        +UpdateProfile()
+    }
+    
+    class Professional {
+        +ProfessionalID: String
+        +TenantID: String
+        +Name: String
+        +Specialization: String
+        +Experience: Number
+        +Qualifications: String[]
+        +AvailabilitySlots: TimeSlot[]
+        +Rating: Number
+        +RegisterProfessional()
+        +UpdateAvailability()
+        +AcceptAppointment()
+    }
+    
+    class Customer {
+        +CustomerID: String
+        +TenantID: String
+        +Name: String
+        +Email: String
+        +Phone: String
+        +MedicalHistory: MedicalRecord[]
+        +BookAppointment()
+        +ViewAppointments()
+        +UpdateProfile()
+    }
+    
+    class Appointment {
+        +AppointmentID: String
+        +TenantID: String
+        +CustomerID: String
+        +ProfessionalID: String
+        +DateTime: DateTime
+        +Status: AppointmentStatus
+        +Type: AppointmentType
+        +Notes: String
+        +CreateAppointment()
+        +RescheduleAppointment()
+        +CancelAppointment()
+        +CompleteAppointment()
+    }
+    
+    class Payment {
+        +PaymentID: String
+        +AppointmentID: String
+        +Amount: Number
+        +Status: PaymentStatus
+        +Method: PaymentMethod
+        +TransactionDate: DateTime
+        +ProcessPayment()
+        +RefundPayment()
+        +GenerateReceipt()
+    }
+    
+    class Review {
+        +ReviewID: String
+        +AppointmentID: String
+        +CustomerID: String
+        +ProfessionalID: String
+        +Rating: Number
+        +Comment: String
+        +Date: DateTime
+        +SubmitReview()
+        +ModerateReview()
+        +ResponseToReview()
+    }
+    
+    class Notification {
+        +NotificationID: String
+        +UserID: String
+        +Type: NotificationType
+        +Content: String
+        +Status: NotificationStatus
+        +DateTime: DateTime
+        +SendNotification()
+        +MarkAsRead()
+        +DeleteNotification()
+    }
+    
+    class TelehealthSession {
+        +SessionID: String
+        +AppointmentID: String
+        +ConnectionURL: String
+        +Status: SessionStatus
+        +StartTime: DateTime
+        +EndTime: DateTime
+        +InitiateSession()
+        +EndSession()
+        +RecordSession()
+    }
+    
+    class AIAssistant {
+        +AssistantID: String
+        +TenantID: String
+        +Type: AssistantType
+        +Capabilities: String[]
+        +ProvideRecommendation()
+        +AnswerQuery()
+        +AnalyzeMedicalData()
+    }
+    
+    class MedicalRecord {
+        +RecordID: String
+        +CustomerID: String
+        +Type: RecordType
+        +CreatedDate: DateTime
+        +Content: String
+        +Attachments: Attachment[]
+        +CreateRecord()
+        +UpdateRecord()
+        +ShareRecord()
+    }
+    
+    Tenant "1" -- "many" User
+    Tenant "1" -- "many" Professional
+    Tenant "1" -- "many" Customer
+    Customer "1" -- "many" Appointment
+    Professional "1" -- "many" Appointment
+    Appointment "1" -- "1" Payment
+    Appointment "1" -- "1" Review
+    Appointment "1" -- "1" TelehealthSession
+    User "1" -- "many" Notification
+    Customer "1" -- "many" MedicalRecord
+    Tenant "1" -- "1" AIAssistant

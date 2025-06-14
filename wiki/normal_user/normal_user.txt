@@ -1,0 +1,53 @@
+flowchart TD
+    start[Patient Starts] --> login{Logged In?}
+    login -- No --> register[Register]
+    register --> login
+    login -- Yes --> dashboard[View Dashboard]
+
+    dashboard --> findDoc[Find Professional]
+    dashboard --> viewAppts[View Appointments]
+    dashboard --> viewProfile[View Profile]
+    dashboard --> chat[Medical Chat]
+
+    findDoc --> searchOptions[Search Options]
+    searchOptions --> bySpecialty[By Specialty]
+    searchOptions --> byLocation[By Location]
+    searchOptions --> byAvailability[By Availability]
+    searchOptions --> byRating[By Rating]
+
+    bySpecialty & byLocation & byAvailability & byRating --> resultsList[Results List]
+    resultsList --> viewDoc[View Professional Profile]
+    viewDoc --> checkAvail[Check Availability]
+    checkAvail --> bookAppt[Book Appointment]
+    bookAppt --> selectSlot[Select Time Slot]
+    selectSlot --> confirmDetails[Confirm Details]
+    confirmDetails --> payment[Make Payment]
+    payment --> appointmentConfirmed[Appointment Confirmed]
+    
+    viewAppts --> upcomingAppts[Upcoming Appointments]
+    viewAppts --> pastAppts[Past Appointments]
+    upcomingAppts --> reschedule[Reschedule]
+    upcomingAppts --> cancel[Cancel]
+    upcomingAppts --> joinSession[Join Telehealth]
+    pastAppts --> leaveReview[Leave Review]
+    
+    chat --> askQuestion[Ask Health Question]
+    askQuestion --> aiProcessing[AI Processes Query]
+    aiProcessing --> retrieveKnowledge[Retrieve Knowledge]
+    retrieveKnowledge --> provideAnswer[Provide Answer]
+    provideAnswer --> suggestProfessional{Needs Professional?}
+    suggestProfessional -- Yes --> findDoc
+    suggestProfessional -- No --> askQuestion
+    
+    joinSession --> telehealthConnect[Connect to Session]
+    telehealthConnect --> consultation[Video Consultation]
+    consultation --> sessionEnd[End Session]
+    sessionEnd --> prescriptions[View Prescriptions]
+    sessionEnd --> followUp[Schedule Follow-up]
+    
+    viewProfile --> editInfo[Edit Personal Info]
+    viewProfile --> viewRecords[View Medical Records]
+    viewProfile --> uploadDocs[Upload Documents]
+    
+    leaveReview --> ratingForm[Rating Form]
+    ratingForm --> submitReview[Submit Review]

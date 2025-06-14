@@ -1,0 +1,189 @@
+erDiagram
+    TENANT ||--o{ USER : has
+    TENANT ||--o{ PROFESSIONAL : employs
+    TENANT ||--o{ CUSTOMER : serves
+    TENANT ||--o{ CONFIGURATION : maintains
+    TENANT {
+        string tenant_id PK
+        string name
+        string domain
+        string subscription_type
+        string status
+        jsonb settings
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    USER {
+        string user_id PK
+        string tenant_id FK
+        string name
+        string email
+        string phone
+        string password_hash
+        string role
+        string status
+        timestamp last_login
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    PROFESSIONAL {
+        string professional_id PK
+        string tenant_id FK
+        string user_id FK
+        string name
+        string specialization
+        int experience_years
+        string[] qualifications
+        float rating
+        string status
+        jsonb preferences
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    CUSTOMER {
+        string customer_id PK
+        string tenant_id FK
+        string user_id FK
+        string name
+        string email
+        string phone
+        timestamp dob
+        string gender
+        string status
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    PROFESSIONAL ||--o{ AVAILABILITY : offers
+    AVAILABILITY {
+        string availability_id PK
+        string professional_id FK
+        date calendar_date
+        time start_time
+        time end_time
+        string status
+        string recurrence_pattern
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    CUSTOMER ||--o{ APPOINTMENT : books
+    PROFESSIONAL ||--o{ APPOINTMENT : accepts
+    APPOINTMENT {
+        string appointment_id PK
+        string tenant_id FK
+        string customer_id FK
+        string professional_id FK
+        timestamp datetime
+        int duration_minutes
+        string status
+        string type
+        string notes
+        string cancellation_reason
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    APPOINTMENT ||--o{ PAYMENT : generates
+    PAYMENT {
+        string payment_id PK
+        string appointment_id FK
+        float amount
+        string currency
+        string status
+        string payment_method
+        string transaction_ref
+        timestamp transaction_date
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    APPOINTMENT ||--o{ REVIEW : receives
+    REVIEW {
+        string review_id PK
+        string appointment_id FK
+        string customer_id FK
+        string professional_id FK
+        int rating
+        string comment
+        string response
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    USER ||--o{ NOTIFICATION : receives
+    NOTIFICATION {
+        string notification_id PK
+        string user_id FK
+        string type
+        string content
+        string status
+        timestamp sent_at
+        timestamp read_at
+        timestamp created_at
+    }
+    
+    APPOINTMENT ||--o{ TELEHEALTH_SESSION : conducts
+    TELEHEALTH_SESSION {
+        string session_id PK
+        string appointment_id FK
+        string connection_url
+        string status
+        timestamp start_time
+        timestamp end_time
+        string recording_url
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    CUSTOMER ||--o{ MEDICAL_RECORD : maintains
+    MEDICAL_RECORD {
+        string record_id PK
+        string customer_id FK
+        string type
+        string content
+        jsonb metadata
+        timestamp record_date
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    MEDICAL_RECORD ||--o{ ATTACHMENT : contains
+    ATTACHMENT {
+        string attachment_id PK
+        string record_id FK
+        string file_name
+        string file_type
+        string storage_url
+        float file_size
+        timestamp uploaded_at
+        timestamp created_at
+    }
+    
+    TENANT ||--o{ CONFIGURATION : customizes
+    CONFIGURATION {
+        string config_id PK
+        string tenant_id FK
+        string category
+        string key
+        string value
+        timestamp created_at
+        timestamp updated_at
+    }
+    
+    TENANT ||--o{ SUBSCRIPTION : pays
+    SUBSCRIPTION {
+        string subscription_id PK
+        string tenant_id FK
+        string plan
+        timestamp start_date
+        timestamp end_date
+        string payment_status
+        float amount
+        string renewal_status
+        timestamp created_at
+        timestamp updated_at
+    }

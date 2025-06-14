@@ -1,0 +1,188 @@
+graph TB
+    %% Client Side Components
+    subgraph "Client Applications"
+        MobileApp["Mobile App\n(iOS/Android)"]
+        WebApp["Web Application\n(React/Angular)"]
+        AdminPortal["Admin Portal\n(Healthcare Business)"]
+        ProfessionalPortal["Professional Portal\n(Doctors/Specialists)"]
+    end
+
+    %% Azure Front Door & Security
+    subgraph "Edge Services & Security"
+        AFD["Azure Front Door\n(Global Load Balancing)"]
+        WAF["Azure Web Application Firewall\n(Security & Protection)"]
+        CDN["Azure CDN\n(Content Delivery)"]
+        APIM["Azure API Management\n(API Gateway)"]
+    end
+
+    %% Identity & Access Management
+    subgraph "Identity & Access Management"
+        AAD["Azure Active Directory\n(Authentication)"]
+        B2C["Azure AD B2C\n(Customer Identity)"]
+        B2B["Azure AD B2B\n(Business Partner Access)"]
+        KeyVault["Azure Key Vault\n(Secrets Management)"]
+    end
+
+    %% Core Application Services
+    subgraph "Core Application Services"
+        AKS["Azure Kubernetes Service\n(Microservices Orchestration)"]
+        
+        subgraph "Microservices"
+            AuthService["Authentication Service"]
+            UserService["User Management Service"]
+            AppointmentService["Appointment Service"]
+            NotificationService["Notification Service"]
+            SearchService["Search Service"]
+            PaymentService["Payment Service"]
+            RatingService["Ratings & Reviews Service"]
+            AnalyticsService["Analytics Service"]
+            TelehealthService["Telehealth Service"]
+            AIService["AI Service"]
+            ContentService["Content Management Service"]
+            MultitenantService["Multi-tenancy Service"]
+            ConfigService["Configuration Service"]
+        end
+        
+        AppInsights["Application Insights\n(Monitoring)"]
+        LogAnalytics["Log Analytics\n(Logging)"]
+    end
+
+    %% Data Storage
+    subgraph "Data Storage"
+        CosmosDB["Azure Cosmos DB\n(NoSQL)"]
+        SQLDatabase["Azure SQL Database\n(Relational Data)"]
+        StorageAccount["Azure Storage Account\n(Blob, Files)"]
+        Redis["Azure Cache for Redis\n(Caching)"]
+        DataLake["Azure Data Lake\n(Analytics Data)"]
+    end
+
+    %% AI & Cognitive Services
+    subgraph "AI & Cognitive Services"
+        OpenAI["Azure OpenAI Service\n(RAG-based Chat)"]
+        CogSearch["Azure Cognitive Search\n(Medical Knowledge Base)"]
+        FormRec["Form Recognizer\n(Document Processing)"]
+        TextAnalytics["Text Analytics for Health\n(Medical NLP)"]
+        BotService["Azure Bot Service\n(Conversational AI)"]
+        AnomalyDetector["Anomaly Detector\n(Fraud Detection)"]
+    end
+
+    %% Data Processing & Analytics
+    subgraph "Data Processing & Analytics"
+        DataFactory["Azure Data Factory\n(ETL)"]
+        Synapse["Azure Synapse Analytics\n(Data Warehouse)"]
+        Stream["Azure Stream Analytics\n(Real-time Processing)"]
+        Databricks["Azure Databricks\n(Big Data Processing)"]
+        PowerBI["Power BI Embedded\n(Visualization)"]
+    end
+
+    %% Integration & Communication
+    subgraph "Integration & Communication"
+        ServiceBus["Azure Service Bus\n(Messaging)"]
+        EventGrid["Azure Event Grid\n(Event Routing)"]
+        EventHub["Azure Event Hub\n(Event Ingestion)"]
+        LogicApps["Azure Logic Apps\n(Workflows)"]
+        ApiConnect["API Connectors\n(3rd Party Integration)"]
+        SignalR["Azure SignalR Service\n(Real-time Comms)"]
+    end
+
+    %% DevOps & Management
+    subgraph "DevOps & Management"
+        DevOps["Azure DevOps\n(CI/CD)"]
+        ARM["Azure Resource Manager\n(Infrastructure as Code)"]
+        Monitor["Azure Monitor\n(Health & Performance)"]
+        Advisor["Azure Advisor\n(Recommendations)"]
+        Policy["Azure Policy\n(Governance)"]
+    end
+
+    %% External Integrations
+    subgraph "External Integrations"
+        EMRSystems["EMR/EHR Systems"]
+        PaymentGateways["Payment Gateways"]
+        InsuranceAPIs["Insurance APIs"]
+        PharmacyAPIs["Pharmacy Systems"]
+        DiagnosticCenters["Diagnostic Centers"]
+        ThirdPartyApps["Third-party Applications"]
+    end
+
+    %% Connection flows
+    MobileApp --> AFD
+    WebApp --> AFD
+    AdminPortal --> AFD
+    ProfessionalPortal --> AFD
+    
+    AFD --> WAF
+    WAF --> CDN
+    WAF --> APIM
+    
+    APIM --> AAD
+    APIM --> AKS
+    
+    AAD --> B2C
+    AAD --> B2B
+    AAD --> KeyVault
+    
+    AKS --> AuthService
+    AKS --> UserService
+    AKS --> AppointmentService
+    AKS --> NotificationService
+    AKS --> SearchService
+    AKS --> PaymentService
+    AKS --> RatingService
+    AKS --> AnalyticsService
+    AKS --> TelehealthService
+    AKS --> AIService
+    AKS --> ContentService
+    AKS --> MultitenantService
+    AKS --> ConfigService
+    
+    AKS --> AppInsights
+    AKS --> LogAnalytics
+    
+    AuthService --> CosmosDB
+    UserService --> SQLDatabase
+    AppointmentService --> SQLDatabase
+    AppointmentService --> CosmosDB
+    SearchService --> CogSearch
+    PaymentService --> SQLDatabase
+    RatingService --> CosmosDB
+    AnalyticsService --> DataLake
+    TelehealthService --> StorageAccount
+    AIService --> OpenAI
+    ContentService --> StorageAccount
+    MultitenantService --> SQLDatabase
+    ConfigService --> CosmosDB
+    
+    SQLDatabase --> Redis
+    CosmosDB --> Redis
+    
+    OpenAI --> CogSearch
+    BotService --> OpenAI
+    TextAnalytics --> OpenAI
+    FormRec --> StorageAccount
+    
+    DataLake --> DataFactory
+    DataFactory --> Synapse
+    Stream --> EventHub
+    Stream --> DataLake
+    Synapse --> PowerBI
+    Synapse --> Databricks
+    
+    AKS --> ServiceBus
+    ServiceBus --> EventGrid
+    EventGrid --> EventHub
+    EventGrid --> LogicApps
+    LogicApps --> ApiConnect
+    AKS --> SignalR
+    
+    DevOps --> ARM
+    Monitor --> AppInsights
+    Monitor --> LogAnalytics
+    Monitor --> Advisor
+    ARM --> Policy
+    
+    ApiConnect --> EMRSystems
+    ApiConnect --> PaymentGateways
+    ApiConnect --> InsuranceAPIs
+    ApiConnect --> PharmacyAPIs
+    ApiConnect --> DiagnosticCenters
+    ApiConnect --> ThirdPartyApps

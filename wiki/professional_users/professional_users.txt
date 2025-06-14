@@ -1,0 +1,41 @@
+flowchart TD
+    profStart[Professional Starts] --> profLogin{Logged In?}
+    profLogin -- No --> profRegister[Register]
+    profRegister --> profLogin
+    profLogin -- Yes --> profDashboard[View Dashboard]
+    
+    profDashboard --> profSchedule[Manage Schedule]
+    profDashboard --> profAppointments[View Appointments]
+    profDashboard --> profPatients[Manage Patients]
+    profDashboard --> profAnalytics[View Analytics]
+    
+    profSchedule --> defineHours[Define Working Hours]
+    profSchedule --> blockSlots[Block Specific Slots]
+    profSchedule --> setRecurrence[Set Recurrence Patterns]
+    
+    profAppointments --> todayAppts[Today's Appointments]
+    profAppointments --> upcomingAppts[Upcoming Appointments]
+    profAppointments --> pastAppts[Past Appointments]
+    
+    todayAppts --> prepSession[Prepare for Session]
+    todayAppts --> startSession[Start Telehealth Session]
+    
+    startSession --> videoCall[Video Consultation]
+    videoCall --> addNotes[Add Clinical Notes]
+    videoCall --> sharePrescription[Share Prescription]
+    videoCall --> orderTests[Order Tests/Diagnostics]
+    videoCall --> endSession[End Session]
+    endSession --> followUpSchedule[Schedule Follow-up]
+    
+    profPatients --> searchPatient[Search Patient]
+    profPatients --> viewHistory[View Medical History]
+    profPatients --> addRecord[Add Medical Record]
+    
+    viewHistory --> pastVisits[Past Visits]
+    viewHistory --> medicalReports[Medical Reports]
+    viewHistory --> prescriptionHistory[Prescription History]
+    
+    profAnalytics --> patientStats[Patient Statistics]
+    profAnalytics --> appointmentMetrics[Appointment Metrics]
+    profAnalytics --> revenueReports[Revenue Reports]
+    profAnalytics --> performanceData[Performance Data]

@@ -1,0 +1,68 @@
+sequenceDiagram
+    participant Patient as Patient
+    participant MobileApp as Mobile App
+    participant APIGateway as API Gateway
+    participant Auth as Auth Service
+    participant Appointment as Appointment Service
+    participant Professional as Professional Service
+    participant Notification as Notification Service
+    participant Payment as Payment Service
+    participant Telehealth as Telehealth Service
+    participant AI as AI Service
+    participant DB as Database
+    
+    Patient->>MobileApp: Open App
+    MobileApp->>APIGateway: Request Login
+    APIGateway->>Auth: Authenticate User
+    Auth->>DB: Verify Credentials
+    DB->>Auth: Return User Data
+    Auth->>APIGateway: Authentication Token
+    APIGateway->>MobileApp: Return Token & User Profile
+    
+    Patient->>MobileApp: Search for Specialists
+    MobileApp->>APIGateway: Search Query
+    APIGateway->>Professional: Find Matching Professionals
+    Professional->>DB: Query Professional Database
+    DB->>Professional: Return Matched Professionals
+    Professional->>APIGateway: Return Search Results
+    APIGateway->>MobileApp: Display Professional List
+    
+    Patient->>MobileApp: Check Available Slots
+    MobileApp->>APIGateway: Get Availability
+    APIGateway->>Appointment: Fetch Available Slots
+    Appointment->>DB: Query Availability
+    DB->>Appointment: Return Available Time Slots
+    Appointment->>APIGateway: Return Availability
+    APIGateway->>MobileApp: Display Available Slots
+    
+    Patient->>MobileApp: Book Appointment
+    MobileApp->>APIGateway: Create Appointment Request
+    APIGateway->>Appointment: Process Appointment
+    Appointment->>DB: Save Appointment
+    DB->>Appointment: Confirm Save
+    Appointment->>Notification: Trigger Notifications
+    Notification->>Professional: Notify Professional
+    Appointment->>APIGateway: Return Booking Confirmation
+    APIGateway->>MobileApp: Display Confirmation
+    
+    Patient->>MobileApp: Make Payment
+    MobileApp->>APIGateway: Payment Request
+    APIGateway->>Payment: Process Payment
+    Payment->>DB: Record Transaction
+    DB->>Payment: Confirm Transaction
+    Payment->>APIGateway: Payment Confirmation
+    APIGateway->>MobileApp: Display Payment Receipt
+    
+    Patient->>MobileApp: Join Telehealth Session
+    MobileApp->>APIGateway: Request Session
+    APIGateway->>Telehealth: Initialize Session
+    Telehealth->>APIGateway: Return Session Details
+    APIGateway->>MobileApp: Connect to Session
+    
+    Patient->>MobileApp: Ask Healthcare Question
+    MobileApp->>APIGateway: Send Query
+    APIGateway->>AI: Process Healthcare Query
+    AI->>DB: Retrieve Knowledge Base
+    DB->>AI: Return Relevant Information
+    AI->>APIGateway: Send Response
+    APIGateway->>MobileApp: Display Answer

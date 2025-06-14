@@ -1,0 +1,44 @@
+flowchart TD
+    adminStart[Admin Starts] --> adminLogin[Login]
+    adminLogin --> adminDashboard[Admin Dashboard]
+    
+    adminDashboard --> tenantManagement[Tenant Management]
+    adminDashboard --> userManagement[User Management]
+    adminDashboard --> billingManagement[Billing Management]
+    adminDashboard --> configManagement[Configuration]
+    adminDashboard --> reportingDashboard[Reporting]
+    
+    tenantManagement --> createTenant[Create New Tenant]
+    tenantManagement --> viewTenants[View All Tenants]
+    tenantManagement --> manageTenant[Manage Single Tenant]
+    
+    createTenant --> setupDomain[Setup Domain]
+    createTenant --> setupBranding[Setup Branding]
+    createTenant --> setupBilling[Setup Billing]
+    createTenant --> inviteAdmin[Invite Tenant Admin]
+    
+    manageTenant --> editSettings[Edit Tenant Settings]
+    manageTenant --> manageSubscription[Manage Subscription]
+    manageTenant --> viewAnalytics[View Tenant Analytics]
+    manageTenant --> suspendTenant[Suspend/Activate Tenant]
+    
+    userManagement --> createUser[Create User]
+    userManagement --> listUsers[List All Users]
+    userManagement --> editUser[Edit User]
+    userManagement --> deactivateUser[Deactivate User]
+    
+    billingManagement --> viewInvoices[View Invoices]
+    billingManagement --> processPayments[Process Payments]
+    billingManagement --> adjustBilling[Adjust Billing]
+    billingManagement --> generateReports[Generate Financial Reports]
+    
+    configManagement --> systemSettings[System Settings]
+    configManagement --> integrationConfig[Integration Configuration]
+    configManagement --> notificationTemplates[Notification Templates]
+    configManagement --> featureFlags[Feature Flags]
+    
+    reportingDashboard --> systemMetrics[System Metrics]
+    reportingDashboard --> userActivity[User Activity]
+    reportingDashboard --> tenantUsage[Tenant Usage]
+    reportingDashboard --> revenueAnalytics[Revenue Analytics]
+    reportingDashboard --> customReports[Custom Reports]
